@@ -20,7 +20,14 @@ end
 
 class BelongsToOptions < AssocOptions
   def initialize(name, options = {})
-    # ...
+    belongings = {
+      foreign_key: "#{name.to_s}_id".to_sym,
+      class_name: name.singularize.camelcase.to_s,
+      primary_key: :id
+    }
+   
+    belongings = belongings.merge options
+    belongings.each { |k, v| self.instance_variable_set("@#{k}", v)}
   end
 end
 
